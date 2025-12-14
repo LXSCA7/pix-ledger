@@ -1,0 +1,34 @@
+services:
+  postgres_db:
+    image: postgres:18-alpine 
+    container_name: pixledger_db
+    environment:
+      POSTGRES_USER: pixledger
+      POSTGRES_PASSWORD: pixledger
+      POSTGRES_DB: pixledger_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pixledger_pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@email.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      - postgres_db
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  pgadmin_data:
+
+# lucas id: 019b1f1c-0196-75f8-af36-bb3019b0df29
+# duda  id: 019b1f1d-fd7b-7c42-b50b-a724a6eea8a7
