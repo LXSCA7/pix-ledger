@@ -29,6 +29,4 @@ services:
 volumes:
   postgres_data:
   pgadmin_data:
-
-# lucas id: 019b1f1c-0196-75f8-af36-bb3019b0df29
-# duda  id: 019b1f1d-fd7b-7c42-b50b-a724a6eea8a7
+  
