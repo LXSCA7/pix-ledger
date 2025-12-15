@@ -15,6 +15,7 @@ builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddScoped<AccountService>();
+builder.Services.AddScoped<AuditService>();
 builder.Services.AddScoped<TransactionService>();
 
 builder.Services.AddControllers();
