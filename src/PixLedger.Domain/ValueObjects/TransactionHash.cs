@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -18,7 +19,10 @@ public record TransactionHash
     public static TransactionHash Compute(TransactionHash? previous, decimal amount, Guid transactionId, DateTime createdAt)
     {
         var parent = previous ?? Genesis;
-        var payload = $"{parent}-{amount:F2}-{transactionId}-{createdAt:O}";
+        var dateString = createdAt.ToString("yyyy-MM-ddTHH:mm:ss.fff", CultureInfo.InvariantCulture);
+        var amountString = amount.ToString("F2", CultureInfo.InvariantCulture);
+        
+        var payload = $"{parent}-{dateString}-{transactionId}-{dateString}";
         
         var bytes = Encoding.UTF8.GetBytes(payload);
         var hashBytes = SHA256.HashData(bytes);
