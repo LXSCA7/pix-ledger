@@ -14,9 +14,10 @@ public class Transaction : Entity
     public TransactionType Type { get; private set; }
     public Guid AccountId { get; private set; }
     public Guid CorrelationId  { get; private set; }
-    public TransactionHash PreviousHash { get; private set; }
-    public TransactionHash CurrentHash { get; private set; }
+    public TransactionHash PreviousHash { get; private set; } = null!;
+    public TransactionHash CurrentHash { get; private set; } = null!;
     
+    protected Transaction() { }
     public Transaction(Guid accountId, 
         decimal amount, 
         TransactionType type, 
