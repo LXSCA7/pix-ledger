@@ -1,0 +1,9 @@
+**/.dockerignore
+**/.env
+**/.git
+**/.vs
+**/.idea
+**/.vscode
+**/bin
+**/obj
+**/TestResults
