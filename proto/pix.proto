@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package pix_ledger;
+
+option go_package = "./pb";
+
+message PixRequest {
+   string key = 1;
+   string kind = 2; // cpf, email, uuid, etc.
+   string user_id = 3;
+}
+
+message PixCreateRequest {
+   string key = 1;
+}
+
+message PixKeyResponse {
+   string key = 1;
+   string user_id = 2;
+   bool active = 3;
+   bool exists = 4;
+}
+
+
+service PixService {
+   rpc FindKey (PixRequest) returns (PixKeyResponse);
+   rpc CreateKey (PixCreateRequest) returns (PixKeyResponse);
+}
