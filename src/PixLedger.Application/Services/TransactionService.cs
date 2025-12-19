@@ -4,7 +4,7 @@ using PixLedger.Domain.Interfaces;
 
 namespace PixLedger.Application.Services;
 
-public class TransactionService(ITransactionRepository transactionRepo, IAccountRepository accountRepo, IUnitOfWork unitOfWork)
+public class TransactionService(ITransactionRepository transactionRepo, IAccountRepository accountRepo, IUnitOfWork unitOfWork, IPixKeyGrpcAdapter pixKeyGrpcAdapter)
 {
     public async Task<Guid> TransferAsync(TransferRequest transferRequest)
     {
@@ -57,5 +57,10 @@ public class TransactionService(ITransactionRepository transactionRepo, IAccount
         
         await transactionRepo.AddAsync(transaction);
         await unitOfWork.CommitAsync();
+    }
+
+    public async Task<bool> FindPixKey(string key)
+    {
+        return await pixKeyGrpcAdapter.ExistsAsync(key, "cpf");
     }
 }
