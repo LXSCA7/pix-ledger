@@ -30,5 +30,11 @@ run-dotnet:
 up:
 	docker-compose up -d
 
+up-all:
+	docker-compose --profile app up -d
+
+down:
+	docker compose --profile app down
+
 tree:
 	tree -I "bin|obj|Properties|*.user|*.cache"
