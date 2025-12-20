@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.36.11
 // 	protoc        v6.33.0
-// source: proto/pix.proto
+// source: pix.proto
 
 package pb
 
@@ -24,15 +24,13 @@ const (
 type PixRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Key           string                 `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
-	Kind          string                 `protobuf:"bytes,2,opt,name=kind,proto3" json:"kind,omitempty"` // cpf, email, uuid, etc.
-	UserId        string                 `protobuf:"bytes,3,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *PixRequest) Reset() {
 	*x = PixRequest{}
-	mi := &file_proto_pix_proto_msgTypes[0]
+	mi := &file_pix_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -44,7 +42,7 @@ func (x *PixRequest) String() string {
 func (*PixRequest) ProtoMessage() {}
 
 func (x *PixRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_pix_proto_msgTypes[0]
+	mi := &file_pix_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -57,7 +55,7 @@ func (x *PixRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PixRequest.ProtoReflect.Descriptor instead.
 func (*PixRequest) Descriptor() ([]byte, []int) {
-	return file_proto_pix_proto_rawDescGZIP(), []int{0}
+	return file_pix_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *PixRequest) GetKey() string {
@@ -67,42 +65,30 @@ func (x *PixRequest) GetKey() string {
 	return ""
 }
 
-func (x *PixRequest) GetKind() string {
-	if x != nil {
-		return x.Kind
-	}
-	return ""
-}
-
-func (x *PixRequest) GetUserId() string {
-	if x != nil {
-		return x.UserId
-	}
-	return ""
-}
-
-type PixCreateRequest struct {
+type PixCreateKeyRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Key           string                 `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
+	UserId        string                 `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	Kind          string                 `protobuf:"bytes,3,opt,name=kind,proto3" json:"kind,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *PixCreateRequest) Reset() {
-	*x = PixCreateRequest{}
-	mi := &file_proto_pix_proto_msgTypes[1]
+func (x *PixCreateKeyRequest) Reset() {
+	*x = PixCreateKeyRequest{}
+	mi := &file_pix_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *PixCreateRequest) String() string {
+func (x *PixCreateKeyRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*PixCreateRequest) ProtoMessage() {}
+func (*PixCreateKeyRequest) ProtoMessage() {}
 
-func (x *PixCreateRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_pix_proto_msgTypes[1]
+func (x *PixCreateKeyRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_pix_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -113,14 +99,28 @@ func (x *PixCreateRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use PixCreateRequest.ProtoReflect.Descriptor instead.
-func (*PixCreateRequest) Descriptor() ([]byte, []int) {
-	return file_proto_pix_proto_rawDescGZIP(), []int{1}
+// Deprecated: Use PixCreateKeyRequest.ProtoReflect.Descriptor instead.
+func (*PixCreateKeyRequest) Descriptor() ([]byte, []int) {
+	return file_pix_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *PixCreateRequest) GetKey() string {
+func (x *PixCreateKeyRequest) GetKey() string {
 	if x != nil {
 		return x.Key
+	}
+	return ""
+}
+
+func (x *PixCreateKeyRequest) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+func (x *PixCreateKeyRequest) GetKind() string {
+	if x != nil {
+		return x.Kind
 	}
 	return ""
 }
@@ -137,7 +137,7 @@ type PixKeyResponse struct {
 
 func (x *PixKeyResponse) Reset() {
 	*x = PixKeyResponse{}
-	mi := &file_proto_pix_proto_msgTypes[2]
+	mi := &file_pix_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -149,7 +149,7 @@ func (x *PixKeyResponse) String() string {
 func (*PixKeyResponse) ProtoMessage() {}
 
 func (x *PixKeyResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_pix_proto_msgTypes[2]
+	mi := &file_pix_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -162,7 +162,7 @@ func (x *PixKeyResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PixKeyResponse.ProtoReflect.Descriptor instead.
 func (*PixKeyResponse) Descriptor() ([]byte, []int) {
-	return file_proto_pix_proto_rawDescGZIP(), []int{2}
+	return file_pix_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *PixKeyResponse) GetKey() string {
@@ -193,52 +193,99 @@ func (x *PixKeyResponse) GetExists() bool {
 	return false
 }
 
-var File_proto_pix_proto protoreflect.FileDescriptor
+type PixCreateKeyResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Key           string                 `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
 
-const file_proto_pix_proto_rawDesc = "" +
+func (x *PixCreateKeyResponse) Reset() {
+	*x = PixCreateKeyResponse{}
+	mi := &file_pix_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PixCreateKeyResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PixCreateKeyResponse) ProtoMessage() {}
+
+func (x *PixCreateKeyResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_pix_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PixCreateKeyResponse.ProtoReflect.Descriptor instead.
+func (*PixCreateKeyResponse) Descriptor() ([]byte, []int) {
+	return file_pix_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *PixCreateKeyResponse) GetKey() string {
+	if x != nil {
+		return x.Key
+	}
+	return ""
+}
+
+var File_pix_proto protoreflect.FileDescriptor
+
+const file_pix_proto_rawDesc = "" +
 	"\n" +
-	"\x0fproto/pix.proto\x12\n" +
-	"pix_ledger\"K\n" +
+	"\tpix.proto\x12\n" +
+	"pix_ledger\"\x1e\n" +
 	"\n" +
 	"PixRequest\x12\x10\n" +
-	"\x03key\x18\x01 \x01(\tR\x03key\x12\x12\n" +
-	"\x04kind\x18\x02 \x01(\tR\x04kind\x12\x17\n" +
-	"\auser_id\x18\x03 \x01(\tR\x06userId\"$\n" +
-	"\x10PixCreateRequest\x12\x10\n" +
-	"\x03key\x18\x01 \x01(\tR\x03key\"k\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\"T\n" +
+	"\x13PixCreateKeyRequest\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x12\x17\n" +
+	"\auser_id\x18\x02 \x01(\tR\x06userId\x12\x12\n" +
+	"\x04kind\x18\x03 \x01(\tR\x04kind\"k\n" +
 	"\x0ePixKeyResponse\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x17\n" +
 	"\auser_id\x18\x02 \x01(\tR\x06userId\x12\x16\n" +
 	"\x06active\x18\x03 \x01(\bR\x06active\x12\x16\n" +
-	"\x06exists\x18\x04 \x01(\bR\x06exists2\x92\x01\n" +
+	"\x06exists\x18\x04 \x01(\bR\x06exists\"(\n" +
+	"\x14PixCreateKeyResponse\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key2\x9b\x01\n" +
 	"\n" +
 	"PixService\x12=\n" +
-	"\aFindKey\x12\x16.pix_ledger.PixRequest\x1a\x1a.pix_ledger.PixKeyResponse\x12E\n" +
-	"\tCreateKey\x12\x1c.pix_ledger.PixCreateRequest\x1a\x1a.pix_ledger.PixKeyResponseB\x06Z\x04./pbb\x06proto3"
+	"\aFindKey\x12\x16.pix_ledger.PixRequest\x1a\x1a.pix_ledger.PixKeyResponse\x12N\n" +
+	"\tCreateKey\x12\x1f.pix_ledger.PixCreateKeyRequest\x1a .pix_ledger.PixCreateKeyResponseB\aZ\x05./;pbb\x06proto3"
 
 var (
-	file_proto_pix_proto_rawDescOnce sync.Once
-	file_proto_pix_proto_rawDescData []byte
+	file_pix_proto_rawDescOnce sync.Once
+	file_pix_proto_rawDescData []byte
 )
 
-func file_proto_pix_proto_rawDescGZIP() []byte {
-	file_proto_pix_proto_rawDescOnce.Do(func() {
-		file_proto_pix_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_proto_pix_proto_rawDesc), len(file_proto_pix_proto_rawDesc)))
+func file_pix_proto_rawDescGZIP() []byte {
+	file_pix_proto_rawDescOnce.Do(func() {
+		file_pix_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_pix_proto_rawDesc), len(file_pix_proto_rawDesc)))
 	})
-	return file_proto_pix_proto_rawDescData
+	return file_pix_proto_rawDescData
 }
 
-var file_proto_pix_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
-var file_proto_pix_proto_goTypes = []any{
-	(*PixRequest)(nil),       // 0: pix_ledger.PixRequest
-	(*PixCreateRequest)(nil), // 1: pix_ledger.PixCreateRequest
-	(*PixKeyResponse)(nil),   // 2: pix_ledger.PixKeyResponse
+var file_pix_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_pix_proto_goTypes = []any{
+	(*PixRequest)(nil),           // 0: pix_ledger.PixRequest
+	(*PixCreateKeyRequest)(nil),  // 1: pix_ledger.PixCreateKeyRequest
+	(*PixKeyResponse)(nil),       // 2: pix_ledger.PixKeyResponse
+	(*PixCreateKeyResponse)(nil), // 3: pix_ledger.PixCreateKeyResponse
 }
-var file_proto_pix_proto_depIdxs = []int32{
+var file_pix_proto_depIdxs = []int32{
 	0, // 0: pix_ledger.PixService.FindKey:input_type -> pix_ledger.PixRequest
-	1, // 1: pix_ledger.PixService.CreateKey:input_type -> pix_ledger.PixCreateRequest
+	1, // 1: pix_ledger.PixService.CreateKey:input_type -> pix_ledger.PixCreateKeyRequest
 	2, // 2: pix_ledger.PixService.FindKey:output_type -> pix_ledger.PixKeyResponse
-	2, // 3: pix_ledger.PixService.CreateKey:output_type -> pix_ledger.PixKeyResponse
+	3, // 3: pix_ledger.PixService.CreateKey:output_type -> pix_ledger.PixCreateKeyResponse
 	2, // [2:4] is the sub-list for method output_type
 	0, // [0:2] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
@@ -246,26 +293,26 @@ var file_proto_pix_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for field type_name
 }
 
-func init() { file_proto_pix_proto_init() }
-func file_proto_pix_proto_init() {
-	if File_proto_pix_proto != nil {
+func init() { file_pix_proto_init() }
+func file_pix_proto_init() {
+	if File_pix_proto != nil {
 		return
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_pix_proto_rawDesc), len(file_proto_pix_proto_rawDesc)),
+			RawDescriptor: unsafe.Slice(unsafe.StringData(file_pix_proto_rawDesc), len(file_pix_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   3,
+			NumMessages:   4,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
-		GoTypes:           file_proto_pix_proto_goTypes,
-		DependencyIndexes: file_proto_pix_proto_depIdxs,
-		MessageInfos:      file_proto_pix_proto_msgTypes,
+		GoTypes:           file_pix_proto_goTypes,
+		DependencyIndexes: file_pix_proto_depIdxs,
+		MessageInfos:      file_pix_proto_msgTypes,
 	}.Build()
-	File_proto_pix_proto = out.File
-	file_proto_pix_proto_goTypes = nil
-	file_proto_pix_proto_depIdxs = nil
+	File_pix_proto = out.File
+	file_pix_proto_goTypes = nil
+	file_pix_proto_depIdxs = nil
 }

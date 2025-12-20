@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.6.0
 // - protoc             v6.33.0
-// source: proto/pix.proto
+// source: pix.proto
 
 package pb
 
@@ -28,7 +28,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type PixServiceClient interface {
 	FindKey(ctx context.Context, in *PixRequest, opts ...grpc.CallOption) (*PixKeyResponse, error)
-	CreateKey(ctx context.Context, in *PixCreateRequest, opts ...grpc.CallOption) (*PixKeyResponse, error)
+	CreateKey(ctx context.Context, in *PixCreateKeyRequest, opts ...grpc.CallOption) (*PixCreateKeyResponse, error)
 }
 
 type pixServiceClient struct {
@@ -49,9 +49,9 @@ func (c *pixServiceClient) FindKey(ctx context.Context, in *PixRequest, opts ...
 	return out, nil
 }
 
-func (c *pixServiceClient) CreateKey(ctx context.Context, in *PixCreateRequest, opts ...grpc.CallOption) (*PixKeyResponse, error) {
+func (c *pixServiceClient) CreateKey(ctx context.Context, in *PixCreateKeyRequest, opts ...grpc.CallOption) (*PixCreateKeyResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(PixKeyResponse)
+	out := new(PixCreateKeyResponse)
 	err := c.cc.Invoke(ctx, PixService_CreateKey_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -64,7 +64,7 @@ func (c *pixServiceClient) CreateKey(ctx context.Context, in *PixCreateRequest, 
 // for forward compatibility.
 type PixServiceServer interface {
 	FindKey(context.Context, *PixRequest) (*PixKeyResponse, error)
-	CreateKey(context.Context, *PixCreateRequest) (*PixKeyResponse, error)
+	CreateKey(context.Context, *PixCreateKeyRequest) (*PixCreateKeyResponse, error)
 	mustEmbedUnimplementedPixServiceServer()
 }
 
@@ -78,7 +78,7 @@ type UnimplementedPixServiceServer struct{}
 func (UnimplementedPixServiceServer) FindKey(context.Context, *PixRequest) (*PixKeyResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method FindKey not implemented")
 }
-func (UnimplementedPixServiceServer) CreateKey(context.Context, *PixCreateRequest) (*PixKeyResponse, error) {
+func (UnimplementedPixServiceServer) CreateKey(context.Context, *PixCreateKeyRequest) (*PixCreateKeyResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method CreateKey not implemented")
 }
 func (UnimplementedPixServiceServer) mustEmbedUnimplementedPixServiceServer() {}
@@ -121,7 +121,7 @@ func _PixService_FindKey_Handler(srv interface{}, ctx context.Context, dec func(
 }
 
 func _PixService_CreateKey_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(PixCreateRequest)
+	in := new(PixCreateKeyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -133,7 +133,7 @@ func _PixService_CreateKey_Handler(srv interface{}, ctx context.Context, dec fun
 		FullMethod: PixService_CreateKey_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PixServiceServer).CreateKey(ctx, req.(*PixCreateRequest))
+		return srv.(PixServiceServer).CreateKey(ctx, req.(*PixCreateKeyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -155,5 +155,5 @@ var PixService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "proto/pix.proto",
+	Metadata: "pix.proto",
 }
