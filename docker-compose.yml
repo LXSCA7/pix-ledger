@@ -13,22 +13,7 @@ services:
     restart: unless-stopped
     networks:
       - pixledger-network
-  api:
-    image: pixledger-api
-    container_name: pixledger-api
-    build:
-      context: .
-      dockerfile: src/PixLedger.Api/Dockerfile
-    environment:
-      - ConnectionStrings__DefaultConnection=Host=postgres_db;Port=5432;Database=pixledger_db;Username=pixledger;Password=pixledger;
-      - ASPNETCORE_ENVIRONMENT=Development
-    ports:
-      - "8080:8080"
-      - "8081:8081"
-    depends_on:
-      - postgres_db
-    networks:
-      - pixledger-network
+  
   pgadmin:
     image: dpage/pgadmin4
     container_name: pixledger_pgadmin
@@ -45,9 +30,39 @@ services:
     networks:
       - pixledger-network
 
+  redis:
+    image: redis:8.4.0-alpine
+    restart: always
+    ports: 
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    networks:
+      - pixledger-network
+
+  api:
+    image: pixledger-api
+    container_name: pixledger-api
+    build:
+      context: .
+      dockerfile: src/PixLedger.Api/Dockerfile
+    profiles: ["app"]
+    environment:
+      - ConnectionStrings__DefaultConnection=Host=postgres_db;Port=5432;Database=pixledger_db;Username=pixledger;Password=pixledger;
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+    depends_on:
+      - postgres_db
+    networks:
+      - pixledger-network
+
 volumes:
   postgres_data:
   pgadmin_data:
+  redis_data:
 
 networks:
   pixledger-network:
