@@ -2,6 +2,6 @@ namespace PixLedger.Application.DTOs;
 
 public record TransferRequest(
     Guid SenderAccountId, 
-    Guid ReceiverAccountId, 
+    string ReceiverPixKey, 
     decimal Amount
 );

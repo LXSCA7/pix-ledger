@@ -23,13 +23,7 @@ public class TransactionController(TransactionService transactionSvc) : Controll
             return BadRequest(ex.Message);
         }
     }
-
-    [HttpPost("{key}")]
-    public async Task<IActionResult> PixTest(string key)
-    {
-        return Ok(new { exists = transactionSvc.FindPixKey(key) });
-    }
-
+    
     [HttpPost("deposit")]
     public async Task<IActionResult> Deposit(DepositRequest request)
     {

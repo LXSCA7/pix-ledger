@@ -1,8 +1,8 @@
-using PixLedger.Domain.Entities;
+using PixLedger.Domain.Interfaces;
 
-namespace PixLedger.Infrastructure.Gateways;
+namespace PixLedger.Infrastructure.Adapters;
 
-public class PixKeyGateway(PixService.PixServiceClient client) : IPixKeyGateway
+public class PixKeyGrpcAdapter(PixService.PixServiceClient client) : IPixKeyGateway
 {
     public async Task<Guid> GetUserIdByPixKeyAsync(string key)
     {

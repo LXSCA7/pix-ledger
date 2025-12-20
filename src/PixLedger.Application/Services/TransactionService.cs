@@ -4,14 +4,15 @@ using PixLedger.Domain.Interfaces;
 
 namespace PixLedger.Application.Services;
 
-public class TransactionService(ITransactionRepository transactionRepo, IAccountRepository accountRepo, IUnitOfWork unitOfWork, IPixKeyGrpcAdapter pixKeyGrpcAdapter)
+public class TransactionService(ITransactionRepository transactionRepo, IAccountRepository accountRepo, IUnitOfWork unitOfWork, PixKeyAppService pixKeyAppSvc)
 {
     public async Task<Guid> TransferAsync(TransferRequest transferRequest)
     {
         var senderAcc = await accountRepo.GetByIdAsync(transferRequest.SenderAccountId) 
                         ?? throw new Exception("sender account not found. [todo notfound ex]");
-        
-        var receiverAcc = await accountRepo.GetByIdAsync(transferRequest.ReceiverAccountId) 
+
+        var receiverId = await pixKeyAppSvc.GetUserIdByPixKeyAsync(transferRequest.ReceiverPixKey);
+        var receiverAcc = await accountRepo.GetByIdAsync(receiverId) 
                           ?? throw new Exception("receiver account not found. [todo notfound ex]");
 
         var correlationId = Guid.CreateVersion7();
@@ -23,9 +24,9 @@ public class TransactionService(ITransactionRepository transactionRepo, IAccount
             correlationId, 
             senderAcc.LastTransactionHash
         );
-        
+
         var receiverTransaction = new Transaction(
-            transferRequest.ReceiverAccountId, 
+            receiverId,
             transferRequest.Amount, 
             TransactionType.Credit, 
             correlationId, 
@@ -57,10 +58,5 @@ public class TransactionService(ITransactionRepository transactionRepo, IAccount
         
         await transactionRepo.AddAsync(transaction);
         await unitOfWork.CommitAsync();
-    }
-
-    public async Task<bool> FindPixKey(string key)
-    {
-        return await pixKeyGrpcAdapter.ExistsAsync(key, "cpf");
     }
 }

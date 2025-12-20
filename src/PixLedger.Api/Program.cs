@@ -1,10 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using PixLedger;
 using PixLedger.Application.Services;
-using PixLedger.Domain.Entities;
 using PixLedger.Domain.Interfaces;
+using PixLedger.Infrastructure.Adapters;
 using PixLedger.Infrastructure.Data;
-using PixLedger.Infrastructure.Gateways;
 using PixLedger.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,11 +15,12 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-builder.Services.AddScoped<IPixKeyGrpcAdapter, PixKeyKeyGrpcAdapter>();
+builder.Services.AddScoped<IPixKeyGateway, PixKeyGrpcAdapter>();
 
 builder.Services.AddScoped<AccountService>();
 builder.Services.AddScoped<AuditService>();
 builder.Services.AddScoped<TransactionService>();
+builder.Services.AddScoped<PixKeyAppService>();
 
 builder.Services.AddGrpcClient<PixService.PixServiceClient>(options =>
 {
