@@ -27,7 +27,7 @@ func NewPixGrpcService() *PixGrpcService {
 }
 
 func (s *PixGrpcService) FindKey(ctx context.Context, req *pb.PixRequest) (*pb.PixKeyResponse, error) {
-	fmt.Println("recebi req, chave", req.Key)
+	// fmt.Println("recebi req, chave", req.Key)
 
 	userId, err := s.client.Get(ctx, req.Key).Result()
 	if err == redis.Nil {
