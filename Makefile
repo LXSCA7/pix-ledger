@@ -38,3 +38,6 @@ down:
 
 tree:
 	tree -I "bin|obj|Properties|*.user|*.cache"
+
+k6:
+	@k6 run tests/load-test.js    
