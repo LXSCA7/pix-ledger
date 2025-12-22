@@ -41,6 +41,18 @@ services:
     networks:
       - pixledger-network
 
+  seq:
+    image: datalust/seq:latest
+    container_name: pixledger-seq
+    environment:
+      - ACCEPT_EULA=Y
+      - SEQ_FIRSTRUN_ADMINPASSWORD=admin123
+    ports:
+      - "5341:80"
+    networks:
+      - pixledger-network
+    restart: unless-stopped
+
   api:
     image: pixledger-api
     container_name: pixledger-api
