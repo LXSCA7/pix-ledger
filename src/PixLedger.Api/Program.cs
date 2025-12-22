@@ -5,8 +5,21 @@ using PixLedger.Domain.Interfaces;
 using PixLedger.Infrastructure.Adapters;
 using PixLedger.Infrastructure.Data;
 using PixLedger.Infrastructure.Repositories;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var seqHost = Environment.GetEnvironmentVariable("SeqHost") ?? "http://localhost:5341";
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Information()
+    .MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Warning)
+    .MinimumLevel.Override("Microsoft.EntityFrameworkCore", Serilog.Events.LogEventLevel.Warning)
+    .Enrich.FromLogContext()
+    // .WriteTo.Console()
+    .WriteTo.Seq(seqHost)
+    .CreateLogger();
+
+builder.Host.UseSerilog();
 
 // Add services to the container.
 builder.Services.AddDbContext<AppDbContext>(options => 
@@ -44,5 +57,17 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+var port = Environment.GetEnvironmentVariable("ASPNETCORE_HTTP_PORTS") 
+           ?? Environment.GetEnvironmentVariable("PORT") 
+           ?? "5014"; 
+
+Log.Information("🤓 pix ledger runnint at :{Port}  [{Env}]", 
+    port, app.Environment.EnvironmentName);
+
+Console.BackgroundColor = ConsoleColor.DarkMagenta;
+Console.ForegroundColor = ConsoleColor.White;
+Console.WriteLine($"\n 🤓 pix ledger running at :{port}\n");
+Console.ResetColor();
 
 app.Run();
