@@ -36,8 +36,14 @@ up-all:
 down:
 	docker compose --profile app down
 
+docker-build:
+	docker compose --profile app up -d --build
+
 tree:
 	tree -I "bin|obj|Properties|*.user|*.cache"
 
 k6:
+	@echo "cleaning redis"
+	@echo "cleaning postgresql [todo]"
+	@docker compose exec redis redis-cli FLUSHALL
 	@k6 run tests/load-test.js    
