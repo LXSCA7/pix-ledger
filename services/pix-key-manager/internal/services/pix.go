@@ -16,10 +16,10 @@ type PixGrpcService struct {
 	client *redis.Client
 }
 
-func NewPixGrpcService() *PixGrpcService {
+func NewPixGrpcService(addr string) *PixGrpcService {
 	return &PixGrpcService{
 		client: redis.NewClient(&redis.Options{
-			Addr:     "localhost:6379", // mudar pra env
+			Addr:     addr, // mudar pra env
 			Password: "",
 			DB:       0,
 		}),
