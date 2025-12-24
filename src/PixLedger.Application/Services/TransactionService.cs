@@ -1,6 +1,6 @@
-using Microsoft.EntityFrameworkCore;
 using PixLedger.Application.DTOs;
 using PixLedger.Domain.Entities;
+using PixLedger.Domain.Exceptions;
 using PixLedger.Domain.Interfaces;
 using Polly;
 
@@ -9,8 +9,7 @@ namespace PixLedger.Application.Services;
 public class TransactionService(ITransactionRepository transactionRepo, IAccountRepository accountRepo, IUnitOfWork unitOfWork, PixKeyAppService pixKeyAppSvc)
 {
     private readonly AsyncPolicy _retryPolicy = Policy
-        .Handle<DbUpdateConcurrencyException>()
-        .Or<DbUpdateException>()
+        .Handle<ConcurrencyException>()
         .Or<InvalidOperationException>(ex => ex.Message.Contains("integrity violation"))
         .WaitAndRetryAsync(3, retryAttempt =>
         {
