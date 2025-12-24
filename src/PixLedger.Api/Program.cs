@@ -35,9 +35,12 @@ builder.Services.AddScoped<AuditService>();
 builder.Services.AddScoped<TransactionService>();
 builder.Services.AddScoped<PixKeyAppService>();
 
+var grpcServerAddress = builder.Configuration["GrpcSettings:Address"] 
+                        ?? throw new ArgumentNullException($"GrpcServer:Address");
+Console.WriteLine($"GrpcServer Address: {grpcServerAddress}");
 builder.Services.AddGrpcClient<PixService.PixServiceClient>(options =>
 {
-    options.Address = new Uri("http://localhost:50051"); 
+    options.Address = new Uri(grpcServerAddress); 
 });
 
 builder.Services.AddControllers();
@@ -62,7 +65,7 @@ var port = Environment.GetEnvironmentVariable("ASPNETCORE_HTTP_PORTS")
            ?? Environment.GetEnvironmentVariable("PORT") 
            ?? "5014"; 
 
-Log.Information("🤓 pix ledger runnint at :{Port}  [{Env}]", 
+Log.Information("🤓 pix ledger running at :{Port}  [{Env}]", 
     port, app.Environment.EnvironmentName);
 
 Console.BackgroundColor = ConsoleColor.DarkMagenta;
