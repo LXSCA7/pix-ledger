@@ -32,6 +32,7 @@ services:
 
   redis:
     image: redis:8.4.0-alpine
+    container_name: pixledger-redis
     restart: always
     ports: 
       - "6379:6379"
@@ -63,11 +64,27 @@ services:
     environment:
       - ConnectionStrings__DefaultConnection=Host=postgres_db;Port=5432;Database=pixledger_db;Username=pixledger;Password=pixledger;
       - ASPNETCORE_ENVIRONMENT=Development
+      - GrpcSettings__Address=http://pix-key-manager:50051
     ports:
       - "8080:8080"
       - "8081:8081"
     depends_on:
       - postgres_db
+      - pix-key-manager
+    networks:
+      - pixledger-network
+
+  pix-key-manager:
+    container_name: pix-key-manager
+    profiles: ["app"]
+    build:
+      context: ./services/pix-key-manager
+      dockerfile: Dockerfile
+    environment:
+      - REDIS_ADDRESS=redis:6379
+      - GRPC_PORT=50051
+    depends_on:
+      - redis
     networks:
       - pixledger-network
 
